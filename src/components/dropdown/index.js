@@ -375,9 +375,10 @@ export default class Dropdown extends PureComponent {
     selectedIndex() {
         let { value } = this.state;
         let { data, valueExtractor } = this.props;
-
-        return data
+        const res = data
             .findIndex((item, index) => null != item && value === valueExtractor(item, index));
+        console.log('>>', res)
+        return res
     }
 
     selectedItem() {
@@ -476,6 +477,7 @@ export default class Dropdown extends PureComponent {
     }
 
     renderBase(props) {
+        console.log('baseprops ', props)
         let { value } = this.state;
         let {
             data,
@@ -503,11 +505,32 @@ export default class Dropdown extends PureComponent {
         title = null == title || 'string' === typeof title ?
             title :
             String(title);
+        if (props.textComponent){
+            return <props.textComponent
+                underlineColor='transparent'
+                containerStyle={{
+                    marginTop:0,
+                    marginLeft:0,
+                    marginRight:0,
+                    paddingLeft:0,
+                    paddingBottom:0,
+                    height: 50,
+                    width: '100%',
+                    borderTop: 0,
 
+                }}
+                {...props}
+                value={title}
+                isPlaceholder={index === -1}
+                editable={false}
+                onChangeText={undefined}
+                renderAccessory={renderAccessory}
+            />
+        }
         return (
             <TextInput
                 underlineColor='transparent'
-                style={{backgroundColor: "transparent", marginBottom: 16, marginTop:-8}}
+                // style={{backgroundColor: "transparent", marginBottom: 16, marginTop:-8}}
                 {...props}
                 value={title}
                 editable={false}
@@ -604,7 +627,6 @@ export default class Dropdown extends PureComponent {
 
         let value = valueExtractor(item, index);
         let label = labelExtractor(item, index);
-
         let title = null == label ?
             value :
             label;
@@ -627,6 +649,15 @@ export default class Dropdown extends PureComponent {
                 paddingRight: rightInset,
             },
         ];
+        if (value === 'separator'){
+            return <View
+                style={{
+                    width: '100%',
+                    height: 2,
+                    backgroundColor: 'rgba(182, 189, 197, 1)'
+                }}
+            ></View>
+        }
 
         return (
             <DropdownItem index={index} {...props}>
