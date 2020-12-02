@@ -18,6 +18,8 @@ import { TextInput } from 'react-native-paper';
 import DropdownItem from '../item';
 import styles from './styles';
 
+const isIOS = Platform.OS === 'ios'
+
 export default class Dropdown extends PureComponent {
     static defaultProps = {
         hitSlop: { top: 6, right: 4, bottom: 6, left: 4 },
@@ -377,7 +379,6 @@ export default class Dropdown extends PureComponent {
         let { data, valueExtractor } = this.props;
         const res = data
             .findIndex((item, index) => null != item && value === valueExtractor(item, index));
-        console.log('>>', res)
         return res
     }
 
@@ -661,7 +662,11 @@ export default class Dropdown extends PureComponent {
 
         return (
             <DropdownItem index={index} {...props}>
-                <Text style={[styles.item, itemTextStyle, textStyle]} numberOfLines={1}>
+                <Text style={[styles.item, itemTextStyle, textStyle, {
+                    fontFamily: isIOS ? 'Gilroy-Bold' : 'Radomir_Tinkov_Gilroy-Bold',
+                    fontSize: 14
+
+                }]} numberOfLines={1}>
                     {title}
                 </Text>
             </DropdownItem>
