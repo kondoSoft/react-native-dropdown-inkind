@@ -516,8 +516,7 @@ export default class Dropdown extends PureComponent {
                     paddingLeft:0,
                     paddingBottom:0,
                     height: 50,
-                    width: '100%',
-                    borderTop: 0,
+                    width: '100%'
 
                 }}
                 {...props}
